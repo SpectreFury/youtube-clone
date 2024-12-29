@@ -36,6 +36,16 @@ app.get("/videos", async (req, res) => {
   }
 });
 
+app.get("/videos/:videoId", async (req, res) => {
+  try {
+    const video = await Video.findById(req.params.videoId);
+
+    res.json({ message: "Video found", video });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.post("/upload", upload.single("video"), async (req, res) => {
   if (!req.file) {
     res.status(400).json({ message: "No file provided" });
